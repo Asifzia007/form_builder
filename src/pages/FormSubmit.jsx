@@ -53,14 +53,6 @@ const FormSubmit = () => {
     });
   };
 
-  const handleRadioChange = (e, field) => {
-    const { value } = e.target;
-    setFormData({
-      ...formData,
-      [field]: value,
-    });
-  };
-
   const validateForm = () => {
     let validationErrors = {};
     let isValid = true;
@@ -257,7 +249,7 @@ const FormSubmit = () => {
                             value={option}
                             checked={formData[field.placeholder] === option}
                             onChange={(e) =>
-                              handleRadioChange(e, field.placeholder)
+                              handleInputChange(e, field.placeholder)
                             }
                             className="mr-2 text-gray-700"
                           />

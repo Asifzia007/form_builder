@@ -24,6 +24,10 @@ const FormResponse = () => {
 
   const headers = responses.length > 0 ? Object.keys(responses[0]) : [];
 
+  const handleBack = () => {
+    navigate('/form-List');
+  };
+
   return (
     <div className="min-h-screen bg-gray-50 p-6">
       <div className="flex justify-between items-center mb-6">
@@ -31,7 +35,7 @@ const FormResponse = () => {
           Responses for Form {formId}
         </h1>
         <button
-          onClick={() => navigate(-1)}
+            onClick={handleBack}
           className="bg-blue-600 text-white px-4 py-1 rounded shadow hover:bg-blue-500 text-sm h-8"
         >
           Back
