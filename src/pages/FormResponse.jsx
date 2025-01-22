@@ -31,7 +31,7 @@ const FormResponse = () => {
         </h1>
         <button
           onClick={() => navigate(-1)}
-          className="bg-gray-600 text-white px-4 py-1 rounded shadow hover:bg-gray-700 text-sm h-8"
+          className="bg-blue-600 text-white px-4 py-1 rounded shadow hover:bg-blue-500 text-sm h-8"
         >
           Back
         </button>
