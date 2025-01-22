@@ -19,7 +19,7 @@ const FormBuilder = () => {
   const navigate = useNavigate();
 
   const regexOptions = {
-    text: /^[a-zA-Z]*$/,
+    text: /^[a-zA-Z ]*$/,
     email: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
     phone: /^(\(\d{3}\)|\d{3})[-.\s]?\d{3}[-.\s]?\d{4}$/,
     number: /^[0-9]*$/,

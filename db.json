@@ -6,7 +6,7 @@
       "fields": [
         {
           "type": "text",
-          "regex": "/^[a-zA-Z]*$/",
+          "regex": "/^[a-zA-Z ]*$/",
           "placeholder": "Name",
           "charLimit": "10",
           "radioOptions": [
@@ -40,7 +40,7 @@
       "fields": [
         {
           "type": "text",
-          "regex": "text",
+          "regex": "/^[a-zA-Z ]*$/",
           "placeholder": "Full Name",
           "charLimit": "10",
           "radioOptions": [
@@ -64,21 +64,6 @@
           "radioOptions": [
             "Male",
             "Female"
-          ]
-        }
-      ]
-    },
-    {
-      "id": "F003",
-      "name": "test",
-      "fields": [
-        {
-          "type": "text",
-          "regex": "/^[a-zA-Z]*$/",
-          "placeholder": "name",
-          "charLimit": "100",
-          "radioOptions": [
-            ""
           ]
         }
       ]
@@ -124,6 +109,41 @@
       "id": "a347",
       "Name": "abcd",
       "Age": "25",
+      "Occupation": "Doctor",
+      "formId": "F001"
+    },
+    {
+      "id": "4725",
+      "Name": "ASIF",
+      "Age": "25",
+      "Occupation": "Doctor",
+      "formId": "F001"
+    },
+    {
+      "id": "a616",
+      "Name": "sami",
+      "Age": "25",
+      "Occupation": "Doctor",
+      "formId": "F001"
+    },
+    {
+      "id": "37f9",
+      "Full Name": "sami",
+      "DOB": "2025-01-22",
+      "Gender": "Male",
+      "formId": "F002"
+    },
+    {
+      "id": "da80",
+      "Full Name": "Asif Zia",
+      "DOB": "2025-01-22",
+      "Gender": "Male",
+      "formId": "F002"
+    },
+    {
+      "id": "01c5",
+      "Name": "ASIF Zia",
+      "Age": "24",
       "Occupation": "Doctor",
       "formId": "F001"
     }
