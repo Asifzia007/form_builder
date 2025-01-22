@@ -36,7 +36,7 @@
     },
     {
       "id": "F002",
-      "name": "form2",
+      "name": "Form2",
       "fields": [
         {
           "type": "text",
@@ -139,13 +139,6 @@
       "DOB": "2025-01-22",
       "Gender": "Male",
       "formId": "F002"
-    },
-    {
-      "id": "01c5",
-      "Name": "ASIF Zia",
-      "Age": "24",
-      "Occupation": "Doctor",
-      "formId": "F001"
     }
   ]
 }
