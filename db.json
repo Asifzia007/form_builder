@@ -1,0 +1,95 @@
+{
+  "forms": [
+    {
+      "id": "F001",
+      "name": "Form1",
+      "fields": [
+        {
+          "type": "text",
+          "regex": "Text",
+          "placeholder": "Name",
+          "charLimit": "10",
+          "radioOptions": [
+            ""
+          ]
+        },
+        {
+          "type": "text",
+          "regex": "number",
+          "placeholder": "Age",
+          "charLimit": "100",
+          "radioOptions": [
+            ""
+          ]
+        },
+        {
+          "type": "radio",
+          "regex": "",
+          "placeholder": "Occupation",
+          "charLimit": "",
+          "radioOptions": [
+            "Doctor",
+            "Nurse"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "F002",
+      "name": "form2",
+      "fields": [
+        {
+          "type": "text",
+          "regex": "text",
+          "placeholder": "Full Name",
+          "charLimit": "10",
+          "radioOptions": [
+            ""
+          ]
+        },
+        {
+          "type": "date",
+          "regex": "",
+          "placeholder": "DOB",
+          "charLimit": "",
+          "radioOptions": [
+            ""
+          ]
+        },
+        {
+          "type": "radio",
+          "regex": "",
+          "placeholder": "Gender",
+          "charLimit": "",
+          "radioOptions": [
+            "Male",
+            "Female"
+          ]
+        }
+      ]
+    }
+  ],
+  "responses": [
+    {
+      "id": "4c7b",
+      "Name": "ASIF ZIA",
+      "Age": "24",
+      "Occupation": "Doctor",
+      "formId": "F001"
+    },
+    {
+      "id": "a611",
+      "Full Name": "Asif Zia",
+      "DOB": "2025-01-01",
+      "Gender": "Male",
+      "formId": "F002"
+    },
+    {
+      "id": "7828",
+      "Name": "Nurse1",
+      "Age": "20",
+      "Occupation": "Nurse",
+      "formId": "F001"
+    }
+  ]
+}
