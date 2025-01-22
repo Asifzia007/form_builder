@@ -48,13 +48,13 @@ const FormSubmit = () => {
     let validationErrors = {};
     let isValid = true;
 
-    // Check if all fields are filled
     formFields.forEach((field) => {
       const fieldValue = formData[field.placeholder] || "";
 
-      // If any field is empty, add an error
       if (!fieldValue) {
-        validationErrors[field.placeholder] = `${field.placeholder} is required`;
+        validationErrors[
+          field.placeholder
+        ] = `${field.placeholder} is required`;
         isValid = false;
       }
 
@@ -72,7 +72,9 @@ const FormSubmit = () => {
       }
 
       if (field.charLimit && fieldValue.length > field.charLimit) {
-        validationErrors[field.placeholder] = `${field.placeholder} exceeds ${field.charLimit} character limit`;
+        validationErrors[
+          field.placeholder
+        ] = `${field.placeholder} exceeds ${field.charLimit} character limit`;
         isValid = false;
       }
     });
@@ -83,8 +85,6 @@ const FormSubmit = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    // Validate the form (check if all fields are filled)
     if (!validateForm()) {
       return;
     }
@@ -106,17 +106,18 @@ const FormSubmit = () => {
         setFormData({});
         setErrors({});
         setIsFormSubmitted(true);
-        setTimeout(() => setIsFormSubmitted(false), 3000); 
+        setTimeout(() => setIsFormSubmitted(false), 3000);
       })
       .catch((err) => console.error("Error saving response:", err));
   };
 
   return (
-    <div className="min-h-screen bg-gray-200 p-6">
+    <div className="min-h-screen bg-gray-200 p-6 flex flex-col justify-between">
       {/* Top Navigation */}
+      <div>
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-2xl font-bold text-blue-800">Form Submission</h1>
-       
+
         <button
           onClick={() => navigate("/login")}
           className="bg-gray-700 text-white px-4 py-1 rounded hover:bg-gray-600 h-8 text-sm"
@@ -126,15 +127,19 @@ const FormSubmit = () => {
       </div>
 
       {/* Form Section */}
-      <div className="max-w-lg mx-auto bg-white p-6 shadow-lg rounded-lg border border-gray-300">
-          
-        <h3 className="text-md font-semibold text-gray-700 mb-4">Please fill out the form</h3>
+      <div className="w-full max-w-lg mx-auto bg-white p-6 shadow-lg rounded-lg border border-gray-300">
+        <h3 className="text-md font-semibold text-gray-700 mb-4">
+          Please fill out the form
+        </h3>
         <form onSubmit={handleSubmit} className="space-y-4">
           {formFields.map((field, index) => (
             <div key={index} className="mb-4">
               {field.type === "text" && (
                 <>
-                  <label htmlFor={field.placeholder} className="block mb-1 text-gray-600  text-sm">
+                  <label
+                    htmlFor={field.placeholder}
+                    className="block mb-1 text-gray-600  text-sm"
+                  >
                     {field.placeholder}
                   </label>
                   <input
@@ -146,14 +151,19 @@ const FormSubmit = () => {
                     className="w-full p-3 border border-gray-300 rounded-md bg-gray-50 focus:outline-none focus:ring-2 focus:ring-gray-400 h-9 text-sm"
                   />
                   {errors[field.placeholder] && (
-                    <p className="text-red-500 text-sm">{errors[field.placeholder]}</p>
+                    <p className="text-red-500 text-sm">
+                      {errors[field.placeholder]}
+                    </p>
                   )}
                 </>
               )}
 
               {field.type === "date" && (
                 <>
-                  <label htmlFor={field.placeholder} className="block mb-2 text-gray-600  text-sm">
+                  <label
+                    htmlFor={field.placeholder}
+                    className="block mb-2 text-gray-600  text-sm"
+                  >
                     {field.placeholder}
                   </label>
                   <input
@@ -164,14 +174,19 @@ const FormSubmit = () => {
                     className="w-full p-3 border border-gray-300 rounded-md bg-gray-50 focus:outline-none focus:ring-2 focus:ring-gray-400 h-9 text-sm"
                   />
                   {errors[field.placeholder] && (
-                    <p className="text-red-500 text-sm">{errors[field.placeholder]}</p>
+                    <p className="text-red-500 text-sm">
+                      {errors[field.placeholder]}
+                    </p>
                   )}
                 </>
               )}
 
               {field.type === "radio" && (
                 <>
-                  <label htmlFor={field.placeholder} className="block mb-2 text-gray-600  text-sm">
+                  <label
+                    htmlFor={field.placeholder}
+                    className="block mb-2 text-gray-600  text-sm"
+                  >
                     {field.placeholder}
                   </label>
                   <div className="flex space-x-4">
@@ -183,17 +198,24 @@ const FormSubmit = () => {
                           name={field.placeholder}
                           value={option}
                           checked={formData[field.placeholder] === option}
-                          onChange={(e) => handleRadioChange(e, field.placeholder)}
+                          onChange={(e) =>
+                            handleRadioChange(e, field.placeholder)
+                          }
                           className="mr-2 text-gray-700"
                         />
-                        <label htmlFor={`option-${i}`} className="ml-2 text-gray-600  text-sm">
+                        <label
+                          htmlFor={`option-${i}`}
+                          className="ml-2 text-gray-600  text-sm"
+                        >
                           {option}
                         </label>
                       </div>
                     ))}
                   </div>
                   {errors[field.placeholder] && (
-                    <p className="text-red-500 text-sm">{errors[field.placeholder]}</p>
+                    <p className="text-red-500 text-sm">
+                      {errors[field.placeholder]}
+                    </p>
                   )}
                 </>
               )}
@@ -208,24 +230,25 @@ const FormSubmit = () => {
             Submit
           </button>
 
-           {/* Success Message */}
-           {isFormSubmitted && (
-                   <div className="bg-green-100 text-green-700 text-center px-4 py-1 rounded mb-4 h-8">
-
-            Form submitted successfully! Thank you.
-          </div>
-        )}
+          {/* Success Message */}
+          {isFormSubmitted && (
+            <div className="bg-green-100 text-green-700 text-center px-4 py-1 rounded mb-4 h-8">
+              Form submitted successfully! Thank you.
+            </div>
+          )}
         </form>
       </div>
+      </div>
+
+      {/* Footer */}
+      <footer className="bg-gray-700 text-white text-center py-4 mt-4">
+        <p className="text-xs">&copy; 2025 Asif Zia. All rights reserved.</p>
+      </footer>
     </div>
   );
 };
 
 export default FormSubmit;
-
-
-
-
 
 // import { useState, useEffect } from "react";
 // import { useNavigate } from "react-router-dom";
@@ -234,7 +257,7 @@ export default FormSubmit;
 //   const [formData, setFormData] = useState({});
 //   const [formFields, setFormFields] = useState([]);
 //   const [response, setResponse] = useState(null);
-//   const [formId, setFormId] = useState(null); 
+//   const [formId, setFormId] = useState(null);
 //   const navigate = useNavigate();
 
 //   console.log(formData, "formData");
@@ -244,13 +267,13 @@ export default FormSubmit;
 //     fetch("http://localhost:3001/forms")
 //       .then((res) => res.json())
 //       .then((data) => {
-//         console.log("Raw fetched data:", data); 
-//         const forms = data; 
-//         console.log("Extracted forms array:", forms); 
-//         const form = forms.find((form) => form.id == "F001"); 
+//         console.log("Raw fetched data:", data);
+//         const forms = data;
+//         console.log("Extracted forms array:", forms);
+//         const form = forms.find((form) => form.id == "F001");
 //         if (form) {
 //           console.log("Found form:", form);
-//           setFormFields(form.fields); 
+//           setFormFields(form.fields);
 //           console.log("Form fields set to:", form.fields);
 //           setFormId(form.id);
 //           console.log("Form ID set to:", form.id);
@@ -275,14 +298,13 @@ export default FormSubmit;
 //     const { value } = e.target;
 //     setFormData({
 //       ...formData,
-//       [field]: value, 
+//       [field]: value,
 //     });
 //   };
 
 //   const handleSubmit = (e) => {
 //     e.preventDefault();
 
-  
 //     const dataToSubmit = {
 //       ...formData,
 //       formId: formId,

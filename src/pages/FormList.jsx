@@ -36,7 +36,7 @@ const FormList = () => {
   };
 
   const handleBack = () => {
-    navigate('/form-builder'); // Navigate to /form-builder
+    navigate('/form-builder');
   };
 
   return (
