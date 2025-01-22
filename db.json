@@ -6,7 +6,7 @@
       "fields": [
         {
           "type": "text",
-          "regex": "Text",
+          "regex": "/^[a-zA-Z]*$/",
           "placeholder": "Name",
           "charLimit": "10",
           "radioOptions": [
@@ -15,7 +15,7 @@
         },
         {
           "type": "text",
-          "regex": "number",
+          "regex": "/^[0-9]*$/",
           "placeholder": "Age",
           "charLimit": "100",
           "radioOptions": [
@@ -67,6 +67,21 @@
           ]
         }
       ]
+    },
+    {
+      "id": "F003",
+      "name": "test",
+      "fields": [
+        {
+          "type": "text",
+          "regex": "/^[a-zA-Z]*$/",
+          "placeholder": "name",
+          "charLimit": "100",
+          "radioOptions": [
+            ""
+          ]
+        }
+      ]
     }
   ],
   "responses": [
@@ -89,6 +104,27 @@
       "Name": "Nurse1",
       "Age": "20",
       "Occupation": "Nurse",
+      "formId": "F001"
+    },
+    {
+      "id": "2f6e",
+      "Name": "ASIFzia",
+      "Age": "12",
+      "Occupation": "Doctor",
+      "formId": "F001"
+    },
+    {
+      "id": "f0f8",
+      "Name": "ASIF",
+      "Age": "20",
+      "Occupation": "Doctor",
+      "formId": "F001"
+    },
+    {
+      "id": "a347",
+      "Name": "abcd",
+      "Age": "25",
+      "Occupation": "Doctor",
       "formId": "F001"
     }
   ]

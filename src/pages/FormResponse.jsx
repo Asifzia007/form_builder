@@ -26,12 +26,12 @@ const FormResponse = () => {
   return (
     <div className="min-h-screen bg-gray-50 p-6">
       <div className="flex justify-between items-center mb-6">
-        <h1 className="text-lg font-bold text-gray-700 uppercase">
+        <h1 className="text-lg font-bold text-blue-800 uppercase">
           Responses for Form {formId}
         </h1>
         <button
           onClick={() => navigate(-1)}
-          className="bg-gray-600 text-white px-4 py-2 rounded shadow hover:bg-gray-700 text-sm"
+          className="bg-gray-600 text-white px-4 py-1 rounded shadow hover:bg-gray-700 text-sm h-8"
         >
           Back
         </button>
