@@ -90,6 +90,13 @@
       "DOB": "2024-12-01",
       "Gender": "Male",
       "formId": "F002"
+    },
+    {
+      "id": "RES004",
+      "Name": "Doctor one",
+      "Age": "25",
+      "Occupation": "Doctor",
+      "formId": "F001"
     }
   ]
 }

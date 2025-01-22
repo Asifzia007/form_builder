@@ -1,6 +1,5 @@
 import { useEffect} from "react";
 import { useNavigate } from "react-router-dom";
-
 import { useDispatch, useSelector } from "react-redux";
 import { fetchFormBuilder, fetchFormResponse } from "../features/FormBuilderSlice";
 
@@ -69,13 +68,15 @@ const FormList = () => {
                   {countResponses(form.id)}
                 </td>
                 <td className="px-4 py-2 flex justify-center space-x-2">
-                  <button
-                    onClick={() => handleView(form.id)}
-                    className="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600 text-xs"
-                  >
-                    View
-                  </button>
-                </td>
+  <button
+    onClick={() => handleView(form.id)}
+    className="bg-blue-100 text-blue-800 px-3 py-1 rounded hover:bg-blue-500 hover:text-white text-xs flex items-center space-x-1 border border-blue-600"
+  >
+
+    <span>View</span>
+  </button>
+</td>
+
               </tr>
             ))}
           </tbody>

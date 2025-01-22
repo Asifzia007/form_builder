@@ -13,20 +13,23 @@ const FormSubmit = () => {
 
   // Fetch all forms on component mount
   useEffect(() => {
-    fetch("http://localhost:3001/forms")
-      .then((res) => res.json())
-      .then((data) => {
+    const fetchForms = async () => {
+      try {
+        const response = await fetch("http://localhost:3001/forms");
+        const data = await response.json();
         setForms(data);
         if (data.length > 0) {
           setFormId(data[0].id);
           setFormName(data[0].name);
           setFormFields(data[0].fields);
         }
-      })
-      .catch((err) => {
+      } catch (err) {
         console.error("Error fetching forms:", err);
-      });
-  }, []);
+      }
+    };
+
+    fetchForms();
+  }, []); 
 
   // Handle form selection change
   const handleFormSelect = (e) => {
@@ -102,7 +105,7 @@ const FormSubmit = () => {
     if (!validateForm()) {
       return;
     }
-  
+
     // Fetch existing responses to generate a new ID
     fetch("http://localhost:3001/responses")
       .then((res) => res.json())
@@ -112,13 +115,13 @@ const FormSubmit = () => {
           existingResponses.length > 0
             ? `RES${String(existingResponses.length + 1).padStart(3, "0")}`
             : "RES001";
-  
+
         const dataToSubmit = {
           id: newId,
           ...formData,
           formId: formId,
         };
-  
+
         // Submit the new response
         return fetch("http://localhost:3001/responses", {
           method: "POST",
@@ -136,7 +139,7 @@ const FormSubmit = () => {
       })
       .catch((err) => console.error("Error saving response:", err));
   };
-  
+
   return (
     <div className="min-h-screen bg-gray-200 p-6 flex flex-col justify-between">
       <div>
@@ -148,15 +151,21 @@ const FormSubmit = () => {
           {/* Form Selector */}
           <div className="flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-6">
             <div className="flex flex-col sm:flex-row items-center space-y-2 sm:space-y-0 sm:space-x-2">
-              <label htmlFor="formSelect" className="text-sm text-gray-600">
-                Select a Form
+              <label
+                htmlFor="formSelect"
+                className="text-sm font-medium text-gray-700"
+              >
+                Select a Form:
               </label>
               <select
                 id="formSelect"
                 value={formId || ""}
                 onChange={handleFormSelect}
-                className="px-4 py-1 border border-gray-500 rounded-md text-sm h-8"
+                className="px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 hover:border-gray-400 transition duration-200 ease-in-out bg-white text-gray-700"
               >
+                <option value="" disabled>
+                  -- Choose a Form --
+                </option>
                 {forms.map((form) => (
                   <option key={form.id} value={form.id}>
                     {form.name}
@@ -164,6 +173,7 @@ const FormSubmit = () => {
                 ))}
               </select>
             </div>
+
             <button
               onClick={() => navigate("/login")}
               className="bg-gray-700 text-white px-4 py-1 rounded hover:bg-gray-600 h-8 text-sm"
@@ -175,7 +185,7 @@ const FormSubmit = () => {
 
         {/* Form Section */}
         <div className="w-full max-w-lg mx-auto bg-white p-6 shadow-lg rounded-lg border border-gray-300">
-          <h3 className="text-md font-semibold text-gray-700 mb-4">
+          <h3 className="text-md font-semibold text-blue-800 mb-4">
             Please fill out the form: {formName}
           </h3>
 
