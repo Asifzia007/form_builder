@@ -1,27 +1,28 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useParams, useNavigate } from "react-router-dom";
+import {fetchFormResponse} from "../features/FormBuilderSlice"
 
 const FormResponse = () => {
   const { formId } = useParams();
-  const [responses, setResponses] = useState([]);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const responses = useSelector((state) =>
+    state.formBuilder.responses.filter(
+      (response) => String(response.formId) === String(formId)
+    )
+  );
+
+  const fetchStatus = useSelector((state) => state.formBuilder.fetchStatus);
 
   useEffect(() => {
-    // Fetch responses data
-    fetch("http://localhost:3001/responses")
-      .then((res) => res.json())
-      .then((data) => {
-        const filteredResponses = data.filter(
-          (response) => String(response.formId) === String(formId)
-        );
-        setResponses(filteredResponses);
-      })
-      .catch((err) => console.error("Error fetching responses:", err));
-  }, [formId]);
+    if (fetchStatus === "idle") {
+      dispatch(fetchFormResponse());
+    }
+  }, [dispatch, fetchStatus]);
 
-  // Get response keys for table headers
   const headers = responses.length > 0 ? Object.keys(responses[0]) : [];
-
 
   return (
     <div className="min-h-screen bg-gray-50 p-6">

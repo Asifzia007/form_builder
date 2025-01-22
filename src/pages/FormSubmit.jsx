@@ -18,9 +18,9 @@ const FormSubmit = () => {
       .then((data) => {
         setForms(data);
         if (data.length > 0) {
-          setFormId(data[0].id); 
-          setFormName(data[0].name); 
-          setFormFields(data[0].fields); 
+          setFormId(data[0].id);
+          setFormName(data[0].name);
+          setFormFields(data[0].fields);
         }
       })
       .catch((err) => {
@@ -66,7 +66,9 @@ const FormSubmit = () => {
       const fieldValue = formData[field.placeholder] || "";
 
       if (!fieldValue) {
-        validationErrors[field.placeholder] = `${field.placeholder} is required`;
+        validationErrors[
+          field.placeholder
+        ] = `${field.placeholder} is required`;
         isValid = false;
       }
 
@@ -84,7 +86,9 @@ const FormSubmit = () => {
       }
 
       if (field.charLimit && fieldValue.length > field.charLimit) {
-        validationErrors[field.placeholder] = `${field.placeholder} exceeds ${field.charLimit} character limit`;
+        validationErrors[
+          field.placeholder
+        ] = `${field.placeholder} exceeds ${field.charLimit} character limit`;
         isValid = false;
       }
     });
@@ -98,18 +102,30 @@ const FormSubmit = () => {
     if (!validateForm()) {
       return;
     }
-
-    const dataToSubmit = {
-      ...formData,
-      formId: formId,
-    };
-
-    // Send form response to the backend (db.json)
-    fetch("http://localhost:3001/responses", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(dataToSubmit),
-    })
+  
+    // Fetch existing responses to generate a new ID
+    fetch("http://localhost:3001/responses")
+      .then((res) => res.json())
+      .then((existingResponses) => {
+        // Generate the new ID
+        const newId =
+          existingResponses.length > 0
+            ? `RES${String(existingResponses.length + 1).padStart(3, "0")}`
+            : "RES001";
+  
+        const dataToSubmit = {
+          id: newId,
+          ...formData,
+          formId: formId,
+        };
+  
+        // Submit the new response
+        return fetch("http://localhost:3001/responses", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(dataToSubmit),
+        });
+      })
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
@@ -120,150 +136,156 @@ const FormSubmit = () => {
       })
       .catch((err) => console.error("Error saving response:", err));
   };
-
+  
   return (
     <div className="min-h-screen bg-gray-200 p-6 flex flex-col justify-between">
-       <div>
-      {/* Top Navigation */}
-      <div className="flex justify-between items-center mb-8">
-        <h1 className="text-2xl font-bold text-blue-800">Form Submission</h1>
-             {/* Form Selector */}
-             <div className="flex items-center space-x-6">
-        <div className="flex items-center space-x-2">
-          <label htmlFor="formSelect" className="text-sm text-gray-600">
-            Select a Form
-          </label>
-          <select
-            id="formSelect"
-            value={formId || ""}
-
-            onChange={handleFormSelect}
-            className="px-4 py-1 border border-gray-500 rounded-md text-sm h-8"
-          >
-            {forms.map((form) => (
-              <option key={form.id} value={form.id}>
-                {form.name}
-              </option>
-            ))}
-          </select>
+      <div>
+        {/* Top Navigation */}
+        <div className="flex flex-col md:flex-row justify-between items-center mb-8 space-y-4 md:space-y-0">
+          <h1 className="text-xl md:text-2xl font-bold text-blue-800 text-center md:text-left">
+            Form Submission
+          </h1>
+          {/* Form Selector */}
+          <div className="flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-6">
+            <div className="flex flex-col sm:flex-row items-center space-y-2 sm:space-y-0 sm:space-x-2">
+              <label htmlFor="formSelect" className="text-sm text-gray-600">
+                Select a Form
+              </label>
+              <select
+                id="formSelect"
+                value={formId || ""}
+                onChange={handleFormSelect}
+                className="px-4 py-1 border border-gray-500 rounded-md text-sm h-8"
+              >
+                {forms.map((form) => (
+                  <option key={form.id} value={form.id}>
+                    {form.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <button
+              onClick={() => navigate("/login")}
+              className="bg-gray-700 text-white px-4 py-1 rounded hover:bg-gray-600 h-8 text-sm"
+            >
+              Login
+            </button>
+          </div>
         </div>
-        <button
-          onClick={() => navigate("/login")}
-          className="bg-gray-700 text-white px-4 py-1 rounded hover:bg-gray-600 h-8 text-sm"
-        >
-          Login
-        </button>
-      </div>
-      </div>
 
-      {/* Form Section */}
-      <div className="w-full max-w-lg mx-auto bg-white p-6 shadow-lg rounded-lg border border-gray-300">
+        {/* Form Section */}
+        <div className="w-full max-w-lg mx-auto bg-white p-6 shadow-lg rounded-lg border border-gray-300">
+          <h3 className="text-md font-semibold text-gray-700 mb-4">
+            Please fill out the form: {formName}
+          </h3>
 
-        <h3 className="text-md font-semibold text-gray-700 mb-4">
-          Please fill out the form: {formName}
-        </h3>
+          <form onSubmit={handleSubmit} className="space-y-4">
+            {formFields.map((field, index) => (
+              <div key={index} className="mb-4">
+                {field.type === "text" && (
+                  <>
+                    <label
+                      htmlFor={field.placeholder}
+                      className="block mb-1 text-gray-600  text-sm"
+                    >
+                      {field.placeholder}
+                    </label>
+                    <input
+                      type="text"
+                      id={field.placeholder}
+                      placeholder={field.placeholder}
+                      value={formData[field.placeholder] || ""}
+                      onChange={(e) => handleInputChange(e, field.placeholder)}
+                      className="w-full p-3 border border-gray-300 rounded-md bg-gray-50 focus:outline-none focus:ring-2 focus:ring-gray-400 h-9 text-sm"
+                    />
+                    {errors[field.placeholder] && (
+                      <p className="text-red-500 text-sm">
+                        {errors[field.placeholder]}
+                      </p>
+                    )}
+                  </>
+                )}
 
-        <form onSubmit={handleSubmit} className="space-y-4">
-          {formFields.map((field, index) => (
-            <div key={index} className="mb-4">
-              {field.type === "text" && (
-                <>
-                  <label
-                    htmlFor={field.placeholder}
-                    className="block mb-1 text-gray-600  text-sm"
-                  >
-                    {field.placeholder}
-                  </label>
-                  <input
-                    type="text"
-                    id={field.placeholder}
-                    placeholder={field.placeholder}
-                    value={formData[field.placeholder] || ""}
-                    onChange={(e) => handleInputChange(e, field.placeholder)}
-                    className="w-full p-3 border border-gray-300 rounded-md bg-gray-50 focus:outline-none focus:ring-2 focus:ring-gray-400 h-9 text-sm"
-                  />
-                  {errors[field.placeholder] && (
-                    <p className="text-red-500 text-sm">{errors[field.placeholder]}</p>
-                  )}
-                </>
-              )}
+                {field.type === "date" && (
+                  <>
+                    <label
+                      htmlFor={field.placeholder}
+                      className="block mb-2 text-gray-600 text-sm"
+                    >
+                      {field.placeholder}
+                    </label>
+                    <input
+                      type="date"
+                      id={field.placeholder}
+                      value={formData[field.placeholder] || ""}
+                      onChange={(e) => handleInputChange(e, field.placeholder)}
+                      className="w-full p-3 border border-gray-300 rounded-md bg-gray-50 focus:outline-none focus:ring-2 focus:ring-gray-400 h-9 text-sm"
+                    />
+                    {errors[field.placeholder] && (
+                      <p className="text-red-500 text-sm">
+                        {errors[field.placeholder]}
+                      </p>
+                    )}
+                  </>
+                )}
 
-              {field.type === "date" && (
-                <>
-                  <label
-                    htmlFor={field.placeholder}
-                    className="block mb-2 text-gray-600 text-sm"
-                  >
-                    {field.placeholder}
-                  </label>
-                  <input
-                    type="date"
-                    id={field.placeholder}
-                    value={formData[field.placeholder] || ""}
-                    onChange={(e) => handleInputChange(e, field.placeholder)}
-                    className="w-full p-3 border border-gray-300 rounded-md bg-gray-50 focus:outline-none focus:ring-2 focus:ring-gray-400 h-9 text-sm"
-                  />
-                  {errors[field.placeholder] && (
-                    <p className="text-red-500 text-sm">{errors[field.placeholder]}</p>
-                  )}
-                </>
-              )}
+                {field.type === "radio" && (
+                  <>
+                    <label
+                      htmlFor={field.placeholder}
+                      className="block mb-2 text-gray-600 text-sm"
+                    >
+                      {field.placeholder}
+                    </label>
+                    <div className="flex space-x-4">
+                      {field.radioOptions.map((option, i) => (
+                        <div key={i} className="flex items-center">
+                          <input
+                            type="radio"
+                            id={`option-${i}`}
+                            name={field.placeholder}
+                            value={option}
+                            checked={formData[field.placeholder] === option}
+                            onChange={(e) =>
+                              handleRadioChange(e, field.placeholder)
+                            }
+                            className="mr-2 text-gray-700"
+                          />
+                          <label
+                            htmlFor={`option-${i}`}
+                            className="ml-2 text-gray-600 text-sm"
+                          >
+                            {option}
+                          </label>
+                        </div>
+                      ))}
+                    </div>
+                    {errors[field.placeholder] && (
+                      <p className="text-red-500 text-sm">
+                        {errors[field.placeholder]}
+                      </p>
+                    )}
+                  </>
+                )}
+              </div>
+            ))}
 
-              {field.type === "radio" && (
-                <>
-                  <label
-                    htmlFor={field.placeholder}
-                    className="block mb-2 text-gray-600 text-sm"
-                  >
-                    {field.placeholder}
-                  </label>
-                  <div className="flex space-x-4">
-                    {field.radioOptions.map((option, i) => (
-                      <div key={i} className="flex items-center">
-                        <input
-                          type="radio"
-                          id={`option-${i}`}
-                          name={field.placeholder}
-                          value={option}
-                          checked={formData[field.placeholder] === option}
-                          onChange={(e) =>
-                            handleRadioChange(e, field.placeholder)
-                          }
-                          className="mr-2 text-gray-700"
-                        />
-                        <label
-                          htmlFor={`option-${i}`}
-                          className="ml-2 text-gray-600 text-sm"
-                        >
-                          {option}
-                        </label>
-                      </div>
-                    ))}
-                  </div>
-                  {errors[field.placeholder] && (
-                    <p className="text-red-500 text-sm">{errors[field.placeholder]}</p>
-                  )}
-                </>
-              )}
-            </div>
-          ))}
+            {/* Submit Button */}
+            <button
+              type="submit"
+              className="w-full bg-gray-700 text-white px-4 py-2 rounded-md hover:bg-gray-700 h-10 focus:outline-none focus:ring-2 focus:ring-gray-400"
+            >
+              Submit
+            </button>
 
-          {/* Submit Button */}
-          <button
-            type="submit"
-            className="w-full bg-gray-700 text-white px-4 py-2 rounded-md hover:bg-gray-700 h-10 focus:outline-none focus:ring-2 focus:ring-gray-400"
-          >
-            Submit
-          </button>
-
-          {/* Success Message */}
-          {isFormSubmitted && (
-            <div className="bg-green-100 text-green-700 text-center px-4 py-1 rounded mb-4 h-8">
-              Form submitted successfully! Thank you.
-            </div>
-          )}
-        </form>
-      </div>
+            {/* Success Message */}
+            {isFormSubmitted && (
+              <div className="bg-green-100 text-green-700 text-center px-4 py-1 rounded mb-4 h-8">
+                Form submitted successfully! Thank you.
+              </div>
+            )}
+          </form>
+        </div>
       </div>
 
       {/* Footer */}
@@ -275,4 +297,3 @@ const FormSubmit = () => {
 };
 
 export default FormSubmit;
-

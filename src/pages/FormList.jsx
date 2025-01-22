@@ -1,28 +1,22 @@
-import { useEffect, useState } from "react";
+import { useEffect} from "react";
 import { useNavigate } from "react-router-dom";
 
+import { useDispatch, useSelector } from "react-redux";
+import { fetchFormBuilder, fetchFormResponse } from "../features/FormBuilderSlice";
+
 const FormList = () => {
-  const [forms, setForms] = useState([]);
-  const [responses, setResponses] = useState([]);
+
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
-  useEffect(() => {
-    fetch("http://localhost:3001/forms")
-      .then((res) => res.json())
-      .then((data) => {
-        console.log("Fetched Forms:", data);
-        setForms(data);
-      })
-      .catch((err) => console.error("Error fetching forms:", err));
+  const {forms} = useSelector((state) => state.formBuilder);
+  const{responses}= useSelector((state) => state.formBuilder);
 
-    fetch("http://localhost:3001/responses")
-      .then((res) => res.json())
-      .then((data) => {
-        console.log("Fetched Responses:", data);
-        setResponses(data);
-      })
-      .catch((err) => console.error("Error fetching responses:", err));
-  }, []);
+  useEffect(()=>{
+    dispatch(fetchFormBuilder())
+    dispatch(fetchFormResponse())
+
+  },[dispatch])
 
   const countResponses = (formId) => {
     const filteredResponses = responses.filter(
