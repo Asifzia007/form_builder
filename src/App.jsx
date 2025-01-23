@@ -23,14 +23,6 @@ const App = () => {
               </PrivateRoute>
             }
           />
-          <Route
-            path="/form-builder/:formId"
-            element={
-              <PrivateRoute>
-                <FormBuilder />
-              </PrivateRoute>
-            }
-          />
            <Route
             path="/form-List"
             element={

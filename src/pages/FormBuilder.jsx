@@ -310,64 +310,65 @@ const FormBuilder = () => {
           </button>
         </div>
 
-        <h2 className="text-lg font-bold mb-4 text-gray-700">Added Form Details</h2>
+        <h2 className="text-lg font-bold mb-4 text-gray-700">
+          Added Form Details
+        </h2>
         {successMessage && (
           <div className="bg-green-100 text-green-700 w-full lg:w-1/3 text-center px-4 py-1 rounded mb-4 h-8">
             {successMessage}
           </div>
         )}
 
-  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 gap-4">
-    {formFields.map((field, index) => (
-      <div key={index} className="mb-2">
-        {field.type === "text" && (
-          <>
-            <p className="mb-1 text-sm">{field.placeholder}</p>
-            <input
-              type="text"
-              readOnly
-              placeholder={field.placeholder}
-              className="border border-gray-300  rounded p-2 w-full h-9"
-            />
-          </>
-        )}
-        {field.type === "date" && (
-          <div>
-            <p className="mb-1 text-sm">{field.placeholder}</p>
-            <input
-              type="date"
-              readOnly
-              placeholder={field.placeholder}
-              className="border border-gray-300 rounded p-2 w-full h-9"
-            />
-          </div>
-        )}
-        {field.type === "radio" && (
-          <div>
-            <p className="mb-2 text-sm">{field.placeholder}</p>
-            <div className="flex flex-wrap space-x-4">
-              {field.radioOptions.map((option, i) => (
-                <div key={i} className="flex items-center">
+        {/* added input form fields */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 gap-4">
+          {formFields.map((field, index) => (
+            <div key={index} className="mb-2">
+              {field.type === "text" && (
+                <>
+                  <p className="mb-1 text-sm">{field.placeholder}</p>
                   <input
-                    type="radio"
-                    id={`option-${i}`}
-                    name={`radio-${index}`}
+                    type="text"
                     readOnly
-                    className="mr-2"
+                    placeholder={field.placeholder}
+                    className="border border-gray-300  rounded p-2 w-full h-9"
                   />
-                  <label htmlFor={`option-${i}`} className="ml-2">
-                    {option}
-                  </label>
+                </>
+              )}
+              {field.type === "date" && (
+                <div>
+                  <p className="mb-1 text-sm">{field.placeholder}</p>
+                  <input
+                    type="date"
+                    readOnly
+                    placeholder={field.placeholder}
+                    className="border border-gray-300 rounded p-2 w-full h-9"
+                  />
                 </div>
-              ))}
+              )}
+              {field.type === "radio" && (
+                <div>
+                  <p className="mb-2 text-sm">{field.placeholder}</p>
+                  <div className="flex flex-wrap space-x-4">
+                    {field.radioOptions.map((option, i) => (
+                      <div key={i} className="flex items-center">
+                        <input
+                          type="radio"
+                          id={`option-${i}`}
+                          name={`radio-${index}`}
+                          readOnly
+                          className="mr-2"
+                        />
+                        <label htmlFor={`option-${i}`} className="ml-2">
+                          {option}
+                        </label>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
-          </div>
-        )}
-      </div>
-    ))}
-  </div>
-
-
+          ))}
+        </div>
       </div>
     </div>
   );
