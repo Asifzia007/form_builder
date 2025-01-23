@@ -133,7 +133,7 @@ const FormSubmit = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-200 p-6 flex flex-col justify-between">
+    <div className="min-h-screen bg-gradient-to-r from-blue-200 via-gray-300 to-white-300 animate-gradient-x p-6 flex flex-col justify-between">
       <div>
         {/* Top Navigation */}
         <div className="flex flex-col md:flex-row justify-between items-center mb-8 space-y-4 md:space-y-0">

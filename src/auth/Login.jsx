@@ -12,9 +12,7 @@ const Login = () => {
 
   const handleLogin = (e) => {
     e.preventDefault();
-
-
-    if (username === 'admin' && password === '1234') {
+   if (username === 'admin' && password === '1234') {
       dispatch(login()); 
       navigate('/form-builder'); 
     } else {
